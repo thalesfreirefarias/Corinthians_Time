@@ -1,25 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Banner from './componentes/Banner';
+import Formulario from './componentes/Formulario';
+import reportWebVitals from './reportWebVitals';
+import Torcedor from './componentes/Torcedor';
+import Rodape from './componentes/rodape';
+
+const Posicao = [
+    {
+        nome: 'Atacante',
+        corPrimaria: 'black',
+        corSecundaria: 'white',
+        corTerciario: 'gray '
+    },
+    {
+        nome: 'Goleiro',
+        corPrimaria: 'white ',
+        corSecundaria: 'black',
+        corTerciario: 'gray'
+    },
+    {
+        nome: 'Zagueiro',
+        corPrimaria: 'black',
+        corSecundaria: 'white',
+        corTerciario: 'gray'
+    },
+    {
+        nome: 'Lateral Esquerdo',
+        corPrimaria: 'white',
+        corSecundaria: 'black',
+        corTerciario: 'gray'
+    },
+    {
+        nome: 'Lateral Direito',
+        corPrimaria: 'black',
+        corSecundaria: 'white',
+        corTerciario: 'gray'
+    }
+];
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [torcedores, setTorcedores] = useState([]);
+
+    const torcedorNovo = (torcedor) => {
+        debugger
+        setTorcedores([...torcedores, torcedor]);
+    };
+
+    return (
+        <div className="App">
+            <Banner />
+            <Formulario torcedorCadastrado={(torcedor) => torcedorNovo(torcedor)} />
+
+            {Posicao.map((posicao) => (<Torcedor 
+            key={posicao.nome} 
+            nome={posicao.nome} 
+            corPrimaria={posicao.corPrimaria} 
+            corSecundaria={posicao.corSecundaria} 
+            corTerciario={posicao.corTerciario} 
+            torcedores={torcedores.filter(torcedor => torcedor.posicao === posicao.nome)}
+
+            /> ))}
+            <Rodape/>
+        </div>
+    );
 }
 
 export default App;
